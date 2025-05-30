@@ -35,6 +35,32 @@ equip = {
 STATS = wera.build_stats_with_equipment(equip)
 STAT_KEYS = list(STATS.keys())
 
+
+st.subheader("Buscar Mejor Build Automáticamente")
+if st.button("Buscar build óptima"):
+    best = wera.find_best_distribution(MAX_LEVEL, STATS, FOOD_HEALTH, BATTLE_DURATION)
+    if best:
+        levels_distribution, stats, score = best
+        score, comida_usada, ataques_totales = wera.evaluate_build(stats, FOOD_HEALTH, BATTLE_DURATION)
+        costo_comida = comida_usada * COSTO_COMIDA
+        costo_balas_grandes = ataques_totales * COSTO_BALAS_GRANDES
+        costo_balas_chicas = ataques_totales * COSTO_BALAS_CHICAS
+
+        st.success("Mejor build encontrada:")
+        for stat, lvl in zip(STAT_KEYS, levels_distribution):
+            st.write(f"**{stat}**: nivel {lvl}")
+        st.write("Estadísticas finales:", stats)
+        st.metric("Puntaje total", f"{score:.2f}")
+        st.metric("Comida usada", f"{comida_usada:.2f}")
+        st.metric("Ataques totales", f"{ataques_totales:.2f}")
+        st.metric("Costo comida", f"{costo_comida:.2f}")
+        st.metric("Costo balas grandes", f"{costo_balas_grandes:.2f}")
+        st.metric("Costo balas chicas", f"{costo_balas_chicas:.2f}")
+    else:
+        st.warning("No se encontró una distribución válida.")
+
+st.divider()
+
 st.subheader("Evaluar Build Manual")
 
 manual_input = []
@@ -62,27 +88,3 @@ if st.button("Evaluar build manual"):
     except Exception as e:
         st.error(f"Error: {e}")
 
-st.divider()
-
-st.subheader("Buscar Mejor Build Automáticamente")
-if st.button("Buscar build óptima"):
-    best = wera.find_best_distribution(MAX_LEVEL, STATS, FOOD_HEALTH, BATTLE_DURATION)
-    if best:
-        levels_distribution, stats, score = best
-        score, comida_usada, ataques_totales = wera.evaluate_build(stats, FOOD_HEALTH, BATTLE_DURATION)
-        costo_comida = comida_usada * COSTO_COMIDA
-        costo_balas_grandes = ataques_totales * COSTO_BALAS_GRANDES
-        costo_balas_chicas = ataques_totales * COSTO_BALAS_CHICAS
-
-        st.success("Mejor build encontrada:")
-        for stat, lvl in zip(STAT_KEYS, levels_distribution):
-            st.write(f"**{stat}**: nivel {lvl}")
-        st.write("Estadísticas finales:", stats)
-        st.metric("Puntaje total", f"{score:.2f}")
-        st.metric("Comida usada", f"{comida_usada:.2f}")
-        st.metric("Ataques totales", f"{ataques_totales:.2f}")
-        st.metric("Costo comida", f"{costo_comida:.2f}")
-        st.metric("Costo balas grandes", f"{costo_balas_grandes:.2f}")
-        st.metric("Costo balas chicas", f"{costo_balas_chicas:.2f}")
-    else:
-        st.warning("No se encontró una distribución válida.")
