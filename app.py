@@ -71,7 +71,7 @@ for stat in STAT_KEYS:
 if st.button("Evaluar build manual"):
     try:
         stats, score, comida_usada, ataques_totales = wera.evaluate_custom_distribution(
-            manual_input, STATS, FOOD_HEALTH, BATTLE_DURATION
+            manual_input, STATS, FOOD_HEALTH, BATTLE_DURATION, MAX_LEVEL
         )
         costo_comida = comida_usada * COSTO_COMIDA
         costo_balas_grandes = ataques_totales * COSTO_BALAS_GRANDES
