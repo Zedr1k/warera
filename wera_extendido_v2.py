@@ -85,10 +85,10 @@ def find_best_distribution(levels, STATS, food_health=20, battle_duration=7):
     backtrack(0, max_points, [])
     return best_allocation
 
-def evaluate_custom_distribution(levels, STATS, food_health=20, battle_duration=7):
+def evaluate_custom_distribution(levels, STATS, food_health=20, battle_duration=7, level=100):
     if len(levels) != len(STATS):
         raise ValueError(f"Se esperaban {len(STATS)} valores de nivel. Recibido: {len(levels)}")
-    if total_cost(levels) > 4 * len(levels):
+    if total_cost(levels) > 4 * level:
         raise ValueError("La distribución excede el total de puntos disponibles.")
 
     stats = compute_stats(levels, STATS)
