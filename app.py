@@ -12,7 +12,7 @@ st.title("Simulador de Build Óptima")
 
 # --- Parámetros globales ---
 st.sidebar.header("Parámetros globales")
-MAX_LEVEL = st.sidebar.slider("Nivel del jugador", 1, 30, 12)
+MAX_LEVEL = st.sidebar.slider("Nivel del jugador", 1, 30, 17)
 FOOD_HEALTH = st.sidebar.number_input("Vida por comida", value=20.0)
 COSTO_COMIDA = st.sidebar.number_input("Costo por comida", value=2.2)
 BATTLE_DURATION = st.sidebar.slider("Duración de la batalla (horas)", 1, 24, 7)
